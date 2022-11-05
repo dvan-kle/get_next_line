@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/31 15:13:24 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2022/11/04 18:24:28 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2022/11/05 13:15:45 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,12 @@ char	*leftover(char *str)
 	j = 0;
 	while (str[i] != '\n' && str[i])
 		i++;
-	if (!str[i])
-	{
-		free(str);
-		return (NULL);
-	}
+	if (str[i] == '\0')
+		return (free(str), NULL);
+	i++;
 	leftover = (char *)malloc(ft_strlen(str) - i + 1);
 	if (!leftover)
 		return (NULL);
-	i++;
 	while (str[i] != '\0')
 	{
 		leftover[j] = str[i];
@@ -75,22 +72,15 @@ char	*new_line(char *str)
 
 char	*get_str(int fd, char *str)
 {
-	char		*buff;
+	char		buff[BUFFER_SIZE + 1];
 	int			bytes_read;
 
 	bytes_read = 1;
-	buff = (char *)malloc(BUFFER_SIZE + 1);
-	if (!buff)
-		return (NULL);
 	while (bytes_read != 0 && !ft_strchr(str, '\n'))
 	{
 		bytes_read = read(fd, buff, BUFFER_SIZE);
 		if (bytes_read == -1)
-		{
-			free(buff);
-			free(str);
-			return (NULL);
-		}
+			return (free(str), NULL);
 		buff[bytes_read] = '\0';
 		if (!str)
 			str = ft_strdup(buff);
@@ -99,7 +89,7 @@ char	*get_str(int fd, char *str)
 		if (!str)
 			return (free(str), NULL);
 	}
-	return (free(buff), str);
+	return (str);
 }
 
 char	*get_next_line(int fd)
