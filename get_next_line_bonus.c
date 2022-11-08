@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   get_next_line.c                                    :+:    :+:            */
+/*   get_next_line_bonus.c                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: dvan-kle <dvan-kle@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/31 15:13:24 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2022/11/08 16:08:31 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2022/11/07 22:05:37 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 #include <fcntl.h>
-
-/*-------------------------------------------------*/
+#include <limits.h>
 
 char	*leftover(char *str)
 {
@@ -94,18 +93,18 @@ char	*get_str(int fd, char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	*str;
+	static char	*str[OPEN_MAX];
 	char		*result;
 
-	if (fd < 0 || BUFFER_SIZE < 1)
+	if (BUFFER_SIZE <= 0)
 		return (NULL);
-	str = get_str(fd, str);
-	if (!str)
+	str[fd] = get_str(fd, str[fd]);
+	if (!str[fd])
 		return (NULL);
-	result = new_line(str);
+	result = new_line(str[fd]);
 	if (!result)
-		return (NULL);
-	str = leftover(str);
+		return (free(str[fd]), NULL);
+	str[fd] = leftover(str[fd]);
 	if (result[0] == '\0')
 		return (free(result), NULL);
 	return (result);

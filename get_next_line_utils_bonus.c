@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   get_next_line_utils.c                              :+:    :+:            */
+/*   get_next_line_utils_bonus.c                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: dvan-kle <dvan-kle@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/02 13:49:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2022/11/08 15:56:20 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2022/11/08 15:26:27 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <stdlib.h>
 
 size_t	ft_strlen(const char *str)
@@ -33,11 +33,9 @@ char	*ft_strjoin(char *s1, char *s2)
 	int		i;
 	int		j;
 
-	if (!s1 || !s2)
-		return (NULL);
 	res = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!res)
-		return (free(s1), NULL);
+		return (NULL);
 	i = 0;
 	j = 0;
 	while (s1[i] != '\0')
@@ -46,11 +44,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		i++;
 	}
 	while (s2[j] != '\0')
-	{
-		res[i] = s2[j];
-		i++;
-		j++;
-	}
+		res[i++] = s2[j++];
 	res[i] = '\0';
 	free(s1);
 	return (res);
@@ -77,8 +71,6 @@ char	*ft_strdup(const char *src)
 	int		i;
 	char	*dest;
 
-	if (!src)
-		return (NULL);
 	dest = (char *)malloc((ft_strlen(src) + 1) * sizeof(char));
 	if (!dest)
 		return (NULL);
