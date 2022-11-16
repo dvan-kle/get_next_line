@@ -6,11 +6,14 @@
 /*   By: dvan-kle <dvan-kle@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/02 13:49:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2022/11/08 15:26:27 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2022/11/16 20:02:17 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+#include <stdlib.h>
+
+#include "get_next_line.h"
 #include <stdlib.h>
 
 size_t	ft_strlen(const char *str)
@@ -33,9 +36,13 @@ char	*ft_strjoin(char *s1, char *s2)
 	int		i;
 	int		j;
 
+	if (!s1)
+		s1 = ft_calloc(1, 1);
+	if (!s1)
+		return (NULL);
 	res = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!res)
-		return (NULL);
+		return (free(s1), NULL);
 	i = 0;
 	j = 0;
 	while (s1[i] != '\0')
@@ -50,36 +57,32 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (res);
 }
 
-char	*ft_strchr(char *str, int c)
+int	ft_strchr(char *str, int c)
 {
 	int		i;
 
 	i = 0;
 	if (!str)
-		return (NULL);
+		return (0);
 	while (str[i] != '\0')
 	{
 		if (str[i] == (char)c)
-			return (&str[i]);
+			return (1);
 		i++;
 	}
-	return (NULL);
+	return (0);
 }
 
-char	*ft_strdup(const char *src)
+char	*ft_calloc(size_t count, size_t size)
 {
-	int		i;
-	char	*dest;
+	char	*str;
+	size_t	i;
 
-	dest = (char *)malloc((ft_strlen(src) + 1) * sizeof(char));
-	if (!dest)
+	str = (char *)malloc(count * size);
+	if (!str)
 		return (NULL);
 	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
+	while (i < count)
+		str[i++] = '\0';
+	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/02 13:49:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2022/11/08 15:56:20 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2022/11/09 13:37:04 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ char	*ft_strjoin(char *s1, char *s2)
 	int		i;
 	int		j;
 
-	if (!s1 || !s2)
+	if (!s1)
+		s1 = ft_calloc(1, 1);
+	if (!s1)
 		return (NULL);
 	res = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!res)
@@ -46,48 +48,38 @@ char	*ft_strjoin(char *s1, char *s2)
 		i++;
 	}
 	while (s2[j] != '\0')
-	{
-		res[i] = s2[j];
-		i++;
-		j++;
-	}
+		res[i++] = s2[j++];
 	res[i] = '\0';
 	free(s1);
 	return (res);
 }
 
-char	*ft_strchr(char *str, int c)
+int	ft_strchr(char *str, int c)
 {
 	int		i;
 
 	i = 0;
 	if (!str)
-		return (NULL);
+		return (0);
 	while (str[i] != '\0')
 	{
 		if (str[i] == (char)c)
-			return (&str[i]);
+			return (1);
 		i++;
 	}
-	return (NULL);
+	return (0);
 }
 
-char	*ft_strdup(const char *src)
+char	*ft_calloc(size_t count, size_t size)
 {
-	int		i;
-	char	*dest;
+	char	*str;
+	size_t	i;
 
-	if (!src)
-		return (NULL);
-	dest = (char *)malloc((ft_strlen(src) + 1) * sizeof(char));
-	if (!dest)
+	str = (char *)malloc(count * size);
+	if (!str)
 		return (NULL);
 	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
+	while (i < count)
+		str[i++] = '\0';
+	return (str);
 }

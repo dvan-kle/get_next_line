@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/31 17:36:35 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2022/11/07 21:02:10 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2022/11/16 20:03:29 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdlib.h>
 
 char	*ft_strdup(const char *src);
-char	*ft_strchr(char *str, int c);
+int		ft_strchr(char *str, int c);
 size_t	ft_strlen(const char *str);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strdup(const char *src);
